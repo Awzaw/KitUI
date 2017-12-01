@@ -10,9 +10,9 @@ use pocketmine\Player;
 
 class Handler {
 
-	const KIT_MAIN_MENU = 0;
-	const KIT_INFO = 1;
-	const KIT_ERROR = 2;
+	const KIT_MAIN_MENU = 100;
+	const KIT_INFO = 99;
+	const KIT_ERROR = 98;
 
 	private $types = [
 		KitMainMenu::class,
@@ -25,23 +25,14 @@ class Handler {
 	}
 
 	public function getWindow(int $windowId, Main $loader, Player $player): Window {
+		$windowId = $this->getWindowIdFor($windowId);
 		if(!isset($this->types[$windowId])) {
 			throw new \OutOfBoundsException("Tried to get window of non-existing window ID.");
 		}
 		return new $this->types[$windowId]($loader, $player);
 	}
 
-	public function isInRange(int $windowId): bool {
-		if(isset($this->types[$windowId]) || isset($this->types[$windowId + 3200])) {
-			return true;
-		}
-		return false;
-	}
-
 	public function getWindowIdFor(int $windowId): int {
-		if($windowId >= 3200) {
-			return $windowId - 3200;
-		}
-		return 3200 + $windowId;
+		return 100 - $windowId;
 	}
 }
