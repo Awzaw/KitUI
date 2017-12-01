@@ -69,9 +69,6 @@ class PlayerEvents implements Listener {
 			}
 			$windowHandler = new Handler();
 			$packet->formId = $windowHandler->getWindowIdFor($packet->formId);
-			if(!$windowHandler->isInRange($packet->formId)) {
-				return;
-			}
 			$window = $windowHandler->getWindow($packet->formId, $this->pl, $event->getPlayer());
 			$window->handle($packet);
 		}
